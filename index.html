@@ -1,983 +1,916 @@
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Apresentação: COP30 Belém 2025</title>
-        <!-- Carrega o Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-        <!-- Carrega a fonte Lexend (incluindo vários pesos) --><link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <!-- Carrega Font Awesome (Pacote Padrão) --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <style>
-            :root {
-                --card-height: min(85vh, 700px); /* Altura máxima do card */
-                --nav-height: 70px; /* Altura da barra de navegação */
-                /* Cores da bandeira */
-                --color-brazil-green: #009C3B;
-                --color-brazil-yellow: #FDE047;
-                --color-brazil-blue: #002776; /* Azul da bandeira */
-                --color-brazil-white: #FFFFFF;
-            }
-            
-            body {
-                font-family: 'Lexend', sans-serif;
-                background-color: #0c1821; /* Fundo de backup */
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                padding: 1rem;
-                color: var(--color-brazil-white); /* Texto principal branco */
-                overflow: hidden;
-                position: relative;
-            }
-    
-            #background-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='140' height='100' fill='%23009C3B'/%3E%3Cpath d='M70 7L133.018 50L70 93L6.98223 50L70 7Z' fill='%23FDE047'/%3E%3Ccircle cx='70' cy='50' r='18' fill='%23002776'/%3E%3C/svg%3E");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                filter: blur(3px);
-                opacity: 0.6;
-                z-index: -1;
-                transform: scale(1.03);
-            }
-    
-            .presentation-card {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(30px) saturate(150%);
-                border-radius: 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                overflow: hidden;
-                transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-                z-index: 10;
-                width: 100%;
-                max-width: 900px;
-                height: var(--card-height);
-                margin-bottom: calc(var(--nav-height) + 1rem); /* Espaço para o botão do chat abaixo */
-            }
-    
-            .slide {
-                padding: 1.5rem 2rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                position: absolute;
-                inset: 0;
-                opacity: 0;
-                transform: translateY(20px);
-                transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-                visibility: hidden;
-                overflow-y: auto;
-                 /* Scrollbar Styling */
-                scrollbar-width: thin; /* Firefox */
-                scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
-            }
-            /* Webkit Scrollbar */
-            .slide::-webkit-scrollbar {
-                width: 6px;
-            }
-            .slide::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            .slide::-webkit-scrollbar-thumb {
-                background-color: rgba(255, 255, 255, 0.3);
-                border-radius: 3px;
-            }
-            .slide.active {
-                opacity: 1;
-                transform: translateY(0);
-                visibility: visible;
-            }
-    
-            .slide-content {
-                min-height: auto;
-                max-height: calc(var(--card-height) - var(--nav-height) - 4rem);
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                gap: 1rem;
-                padding-bottom: 1rem;
-            }
-            
-            .slide-content h1 { font-size: 2.25rem; line-height: 2.5rem; }
-            .slide-content h2 { font-size: 1.875rem; line-height: 2.25rem; }
-            .slide-content p, .slide-content ul, .slide-content li { font-size: 1rem; line-height: 1.6rem; }
-            
-            @media (min-width: 768px) {
-                 .slide { padding: 2.5rem 3rem; }
-                 .slide-content h1 { font-size: 3rem; line-height: 1; }
-                 .slide-content h2 { font-size: 2.25rem; line-height: 2.5rem; }
-                 .slide-content p, .slide-content ul, .slide-content li { font-size: 1.125rem; line-height: 1.75rem; }
-                 .slide-content { gap: 1.5rem; }
-            }
-    
-    
-            .slide-content h1, .slide-content h2 {
-                font-family: 'Lexend', sans-serif;
-                color: var(--color-brazil-white); /* Títulos brancos */
-                text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-                line-height: 1.2;
-            }
-            .slide-content p, .slide-content ul, .slide-content li {
-                font-family: 'Lexend', sans-serif;
-                color: var(--color-brazil-white); /* Texto branco puro */
-                text-align: center;
-                text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-                font-weight: 300;
-                 max-width: 65ch;
-            }
-            
-            .slide-content ul.no-bullets li {
-                 text-align: left;
-            }
-    
-            .slide-content strong { /* Destaque apenas com negrito */
-                font-weight: 600;
-                text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-                color: var(--color-brazil-white); /* Negrito branco também */
-            }
-            /* Ícones brancos por padrão */
-            .slide-content .fa-solid, .slide-content .fa-brands {
-                color: var(--color-brazil-white);
-            }
-    
-            .slide-content ul.no-bullets {
-                list-style: none;
-                padding-left: 0;
-                max-width: 100%;
-            }
-            .slide-content ul.no-bullets li {
-                display: flex;
-                align-items: flex-start;
-                gap: 0.75rem;
-                margin-bottom: 0.75rem;
-                text-align: left;
-            }
-            .slide-content ul.no-bullets li .fa-solid {
-                flex-shrink: 0;
-                margin-top: 0.2em;
-                width: 1.5rem;
-                text-align: center;
-            }
-    
-            .navigation-bar {
-                background: rgba(255, 255, 255, 0.15);
-                backdrop-filter: blur(20px);
-                border-top: 1px solid rgba(255, 255, 255, 0.25);
-                border-bottom-left-radius: 2rem;
-                border-bottom-right-radius: 2rem;
-                color: #e2e8f0;
-                padding: 0.75rem 1.5rem;
-                z-index: 10;
-                height: var(--nav-height);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .navigation-bar button {
-                background-color: rgba(255, 255, 255, 0.2);
-                color: white;
-                transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-                border-radius: 9999px;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            }
-            .navigation-bar button:hover:not(:disabled) {
-                background-color: rgba(255, 255, 255, 0.3);
-                transform: scale(1.1) translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            }
-            .navigation-bar button:active:not(:disabled) {
-                transform: scale(0.95);
-                box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-            }
-            .navigation-bar button:disabled {
-                background-color: rgba(255, 255, 255, 0.08);
-                color: rgba(255, 255, 255, 0.4);
-                cursor: not-allowed;
-                transform: none;
-                box-shadow: none;
-            }
-    
-            /* Indicadores de slide (bolinhas) com animação - EFEITO LÍQUIDO */
-            #slide-indicators {
-                display: flex;
-                gap: 0.4rem; /* Reduzir o gap para o efeito de "juntar" */
-                align-items: center;
-                position: relative; /* Para posicionar as bolinhas durante a transição */
-            }
-    
-            .slide-indicator-dot {
-                width: 8px;
-                height: 8px;
-                background-color: rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                cursor: pointer;
-                transition: background-color 0.4s ease, 
-                            transform 0.5s cubic-bezier(0.65, 0, 0.35, 1); /* Curva suave e um pouco mais lenta */
-                transform-origin: center center;
-                position: relative; /* Para z-index se necessário */
-                will-change: transform, background-color;
-            }
-    
-            .slide-indicator-dot.active {
-                background-color: var(--color-brazil-white);
-                transform: scale(1.4);
-                z-index: 1; /* Garante que a bolinha ativa fique por cima */
-            }
-    
-            /* Classes para animação 'líquida' */
-            .slide-indicator-dot.merging {
-                 /* Encolhe e move levemente para o centro da TRANSICAO */
-                transform: scale(0.7) translateX(var(--merge-tx, 0px));
-                background-color: rgba(255, 255, 255, 0.2); /* Mais escura ao 'juntar' */
-            }
-            .slide-indicator-dot.active.shrinking {
-                 /* Bolinha ativa antiga encolhe */
-                transform: scale(0.7);
-                background-color: rgba(255, 255, 255, 0.3);
-            }
-    
-    
-            .slide-indicator-dot:hover:not(.active) {
-                background-color: rgba(255, 255, 255, 0.6);
-                transform: scale(1.1);
-            }
-    
-    
-            /* Chatbot e botão flutuante */
-            #chat-widget {
-                font-family: 'Lexend', sans-serif;
-                position: fixed;
-                top: 50%; 
-                left: 50%; 
-                /* Estado inicial escondido abaixo E centralizado */
-                transform: translate(-50%, calc(-50% + 40px)) scale(0.95); 
-                width: 90%;
-                max-width: 400px;
-                height: 80%;
-                max-height: 600px;
-                background-color: rgba(255, 255, 255, 0.6); /* Fundo BEM mais branco/opaco */
-                backdrop-filter: blur(25px) saturate(160%); /* Ajuste fino no blur/saturação */
-                border: 1px solid rgba(255, 255, 255, 0.6); /* Borda mais visível */
-                border-radius: 20px;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); /* Sombra mais suave */
-                z-index: 100;
-                display: flex;
-                flex-direction: column;
-                overflow: hidden;
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.4s; /* Transição mais rápida */
-                cursor: default; /* Remove cursor de arrastar */
-            }
-    
-            #chat-widget.show {
-                opacity: 1;
-                visibility: visible;
-                 /* Estado final visível no centro */
-                transform: translate(-50%, -50%) translateY(0) scale(1);
-            }
-    
-            #chat-header {
-                background: rgba(0, 156, 59, 0.55); /* Verde um pouco mais opaco */
-                backdrop-filter: blur(15px);
-                color: var(--color-brazil-white); /* Texto branco */
-                padding: 18px 22px;
-                font-weight: 600;
-                font-size: 1.3rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-                cursor: default; /* Remove cursor de arrastar */
-            }
-            
-            #closeChatBtn {
-                background: none;
-                border: none;
-                color: var(--color-brazil-white); /* Ícone branco */
-                font-size: 1.5rem;
-                line-height: 1;
-                cursor: pointer;
-                font-weight: bold;
-                opacity: 0.9;
-                transition: opacity 0.2s, transform 0.2s;
-            }
-            #closeChatBtn:hover {
-                opacity: 1;
-                transform: rotate(90deg);
-            }
-    
-            #chat-messages {
-                flex-grow: 1;
-                overflow-y: auto;
-                padding: 16px 20px;
-                background-color: transparent;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                scroll-behavior: smooth;
-                /* Scrollbar Styling */
-                scrollbar-width: thin; /* Firefox */
-                scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Scrollbar mais escura */
-            }
-            /* Webkit Scrollbar */
-            #chat-messages::-webkit-scrollbar {
-                width: 6px;
-            }
-            #chat-messages::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            #chat-messages::-webkit-scrollbar-thumb {
-                background-color: rgba(0, 0, 0, 0.3); /* Scrollbar mais escura */
-                border-radius: 3px;
-            }
-    
-    
-            .chat-bubble {
-                padding: 12px 18px;
-                border-radius: 22px;
-                max-width: 80%;
-                word-wrap: break-word;
-                line-height: 1.5;
-                font-size: 0.9rem;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                transition: transform 0.2s ease-out;
-                color: #333; /* Texto escuro para melhor leitura no fundo claro */
-                text-shadow: none; /* Remove sombra do texto */
-            }
-            .chat-bubble strong {
-                font-weight: 600;
-                color: #111; /* Negrito um pouco mais escuro */
-            }
-    
-            .user-bubble {
-                background-color: var(--color-brazil-blue); /* Azul da bandeira */
-                color: var(--color-brazil-white); /* Texto branco */
-                align-self: flex-end;
-                border-bottom-right-radius: 8px;
-                transform: translateX(10px);
-            }
-            .user-bubble strong { color: var(--color-brazil-white); } /* Negrito branco no balão azul */
-    
-    
-            .ai-bubble {
-                background-color: rgba(255, 255, 255, 0.8); /* Vidro BEM claro, quase opaco */
-                color: #333; /* Texto escuro */
-                align-self: flex-start;
-                border-bottom-left-radius: 8px;
-                transform: translateX(-10px);
-            }
-             .ai-bubble strong { color: #111; } /* Negrito mais escuro no balão claro */
-             /* Garante que ícones da Flora fiquem escuros no balão claro */
-             .ai-bubble i.fa-solid, .ai-bubble i.fa-brands {
-                 color: #555;
-             }
-    
-    
-            .user-bubble.animated, .ai-bubble.animated {
-                transform: translateX(0);
-            }
-    
-            .typing-indicator {
-                align-self: flex-start;
-                background-color: rgba(255, 255, 255, 0.8);
-                padding: 10px 14px;
-                border-bottom-left-radius: 8px;
-            }
-            .typing-indicator span {
-                height: 8px;
-                width: 8px;
-                background-color: #aaa; /* Bolinhas do typing cinza */
-                border-radius: 50%;
-                display: inline-block;
-                animation: bounce 1.3s infinite;
-                margin: 0 2px;
-            }
-            .typing-indicator span:nth-of-type(2) { animation-delay: 0.15s; }
-            .typing-indicator span:nth-of-type(3) { animation-delay: 0.3s; }
-    
-            @keyframes bounce {
-                0%, 60%, 100% { transform: translateY(0); }
-                30% { transform: translateY(-4px); }
-            }
-    
-            #chat-input-container {
-                background-color: rgba(255, 255, 255, 0.35); /* Fundo de vidro */
-                backdrop-filter: blur(15px);
-                border-top: 1px solid rgba(255, 255, 255, 0.45); /* Borda mais visível */
-                padding: 14px 20px;
-                display: flex;
-                gap: 10px;
-                border-bottom-left-radius: 20px;
-                border-bottom-right-radius: 20px;
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-            }
-    
-            #chat-input {
-                font-family: 'Lexend', sans-serif;
-                flex-grow: 1;
-                background-color: rgba(255, 255, 255, 0.6); /* Input mais opaco */
-                border: 1px solid rgba(255, 255, 255, 0.7); /* Borda mais visível */
-                color: #333; /* Texto do input escuro */
-                border-radius: 28px;
-                padding: 10px 20px;
-                font-size: 1rem;
-                transition: all 0.2s ease;
-            }
-            #chat-input::placeholder {
-                color: #666; /* Placeholder escuro */
-                opacity: 0.9;
-            }
-            #chat-input:focus {
-                outline: none;
-                border-color: rgba(0, 39, 118, 0.5); /* Borda azul ao focar */
-                background-color: rgba(255, 255, 255, 0.7);
-                box-shadow: 0 0 0 3px rgba(0, 39, 118, 0.15); /* Sombra azul ao focar */
-            }
-    
-            #sendChatBtn {
-                background-color: var(--color-brazil-blue); /* Azul da bandeira */
-                color: var(--color-brazil-white); /* Ícone branco */
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            }
-            #sendChatBtn:hover {
-                background-color: #001f5c; /* Azul um pouco mais escuro no hover */
-                transform: scale(1.08);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            }
-            #sendChatBtn:active {
-                transform: scale(0.95);
-                box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-            }
-    
-            #chatToggleBtn {
-                background: rgba(255, 255, 255, 0.15);
-                backdrop-filter: blur(15px);
-                border: 1px solid rgba(255, 255, 255, 0.25);
-                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                color: var(--color-brazil-white);
-                font-weight: 600;
-                padding: 0.8rem 1.6rem;
-                border-radius: 2.5rem;
-                transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.3s, opacity 0.3s ease; /* Delay na visibilidade */
-                display: inline-flex;
-                align-items: center;
-                gap: 0.6rem;
-                z-index: 50;
-                position: relative; 
-                margin-top: -1.5rem; 
-                margin-bottom: 1rem; 
-                /* Estado inicial visível */
-                visibility: visible; 
-                opacity: 1; 
-                transform: translateY(0); /* Estado inicial da animação de saída */
-            }
-            /* Esconde o botão QUANDO O CHAT ESTÁ ABERTO */
-             #chat-widget.show ~ #chatToggleBtn {
-                 visibility: hidden;
-                 opacity: 0;
-                 transform: translateY(20px); /* Animação de saída */
-                 transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s 0.3s, opacity 0.3s ease; /* Garante transição de volta */
-             }
-    
-            
-            #animated-chat-icon {
-                transition: opacity 0.5s ease-in-out;
-                color: var(--color-brazil-white); /* Ícones da flora brancos */
-                width: 1.25em;
-                text-align: center;
-            }
-    
-            #chatToggleBtn:hover {
-                background: rgba(255, 255, 255, 0.25);
-                transform: scale(1.05) translateY(-3px);
-                box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-            }
-    
-    
-        </style>
-    </head>
-    <body>
-    
-        
-    
-    <div id="background-overlay"></div> 
-    
-    <div class="presentation-card w-full max-w-4xl mx-auto h-[var(--card-height)]">
-            
-            
-    
-    <div id="presentation-container" class="relative flex-grow">
-    
-                <!-- Slides 1 a 15 aqui -->
-                
-    
-    <div class="slide text-center active"> <div class="slide-content w-full"> <span class="text-xl font-bold tracking-wider" style="color: var(--color-brazil-green);">COP30 | BELÉM 2025</span> <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mt-4 ">A CÚPULA DO CLIMA</h1> <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold " style="color: var(--color-brazil-yellow);">NA AMAZÔNIA</h2> <p class="mt-6 text-base md:text-lg max-w-lg mx-auto font-light"> Um momento histórico para o Brasil e para o planeta. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">O que é a COP30?</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> <strong>COP</strong> significa <strong>"Conferência das Partes"</strong>. É a 30ª reunião anual dos países que fazem parte da Convenção-Quadro das Nações Unidas sobre Mudança do Clima (UNFCCC). </p> <p> Em 2025, ela acontecerá em <strong>Belém (Pará)</strong>, sendo a primeira vez que a Amazônia, um dos ecossistemas mais vitais do mundo, sediará o evento. </p> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Pra que serve a COP30?</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> A COP serve para que líderes mundiais, cientistas e a sociedade civil se reúnam para: </p> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li><i class="fa-solid fa-chart-line"></i><span><strong>Negociar</strong> metas globais para combater a mudança climática.</span></li> <li><i class="fa-solid fa-clipboard-check"></i><span><strong>Revisar</strong> o progresso de acordos anteriores (como o Acordo de Paris).</span></li> <li><i class="fa-solid fa-landmark"></i><span><strong>Definir</strong> como os países ricos ajudarão (financeiramente) os países em desenvolvimento a se adaptarem e a reduzir emissões.</span></li> <li><i class="fa-solid fa-lightbulb"></i><span><strong>Discutir</strong> novas soluções e tecnologias.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Por que é importante... HOJE?</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> A urgência nunca foi tão grande. Estamos vivendo uma <strong>crise climática</strong>, não apenas uma "mudança". </p> <p> Eventos climáticos extremos (secas, enchentes, ondas de calor) estão mais frequentes e intensos. A COP30 é crucial <strong>hoje</strong> porque o tempo para "planejar" está acabando; precisamos de <strong>ação imediata e decisiva</strong>. </p> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Por que é importante... PARA NÓS?</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> Para o Brasil, é uma oportunidade única. Sendo na Amazônia, a COP30 coloca os holofotes sobre: </p> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li><i class="fa-solid fa-tree"></i><span>A <strong>proteção das nossas florestas</strong> e da biodiversidade.</span></li> <li><i class="fa-solid fa-leaf"></i><span>A <strong>Bioeconomia</strong> (usar a floresta de forma inteligente e sustentável).</span></li> <li><i class="fa-solid fa-award"></i><span>A chance do Brasil <strong>liderar pelo exemplo</strong>, cobrando ações de países que mais poluíram historicamente.</span></li> <li><i class="fa-solid fa-users"></i><span>Discutir o futuro dos <strong>povos indígenas</strong>, os guardiões da floresta.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">O que é o Acordo de Paris?</h2> <p class="text-base md:text-lg font-light"> É o grande acordo climático global assinado em 2015 (na COP21). O principal objetivo é limitar o aquecimento global a <strong>bem abaixo de 2°C</strong> (preferencialmente 1.5°C) em relação aos níveis pré-industriais. A COP30 será um momento chave para verificar se os países estão cumprindo suas metas. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4">Belém: O Palco da Amazônia</h2> <p class="text-base md:text-lg font-light max-w-xl mx-auto"> Escolher Belém, a "metrópole da Amazônia", é simbólico. Coloca a maior floresta tropical do mundo no centro do debate. É a chance de mostrar ao mundo a realidade da região, seus desafios e suas soluções baseadas na <strong>natureza e nos povos tradicionais</strong>. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Temas Chave da COP30</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li> <i class="fa-solid fa-dollar-sign"></i> <span><strong>Financiamento:</strong> Como os países ricos vão pagar a conta, ajudando os mais pobres a se adaptarem?</span> </li> <li> <i class="fa-solid fa-tree"></i> <span><strong>Fim do Desmatamento:</strong> Metas mais ambiciosas para zerar o desmatamento ilegal globalmente.</span></li> <li> <i class="fa-solid fa-industry"></i> <span><strong>Energia Limpa:</strong> Acelerar o fim dos combustíveis fósseis (petróleo, carvão) e investir em solar, eólica, etc.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4">Justiça Climática</h2> <p class="text-base md:text-lg font-light max-w-xl mx-auto"> É o reconhecimento de que os países mais pobres e as comunidades vulneráveis (como indígenas e quilombolas) são os que <strong>menos contribuíram</strong> para a crise, mas são os que <strong>mais sofrem</strong>. Justiça climática é fazer com que os países ricos, que historicamente mais poluíram, assumam a maior responsabilidade. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4">Bioeconomia: A Floresta em Pé</h2> <p class="text-base md:text-lg font-light max-w-xl mx-auto"> É um modelo econômico que usa os recursos da biodiversidade de forma inteligente e sustentável, <strong>mantendo a floresta viva</strong>. Em vez de derrubar para pasto, se investe na cadeia do açaí, castanha-do-pará, cacau, cupuaçu, além de fármacos e cosméticos. Gera renda para a população local e protege o meio ambiente. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-4">Os Riscos de Não Agir</h2> <p class="text-base md:text-lg font-light max-w-xl mx-auto"> Se nada for feito (ou feito muito devagar), os impactos serão catastróficos. No Brasil, isso significa <strong>secas mais severas</strong> na Amazônia e Nordeste, <strong>enchentes mais destrutivas</strong> no Sul e Sudeste (como vimos no RS), perda de safras no agronegócio e aumento do nível do mar nas cidades costeiras. </p> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Desafios de Belém</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> Sediar a COP30 traz desafios únicos para Belém e a Amazônia: </p> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li><i class="fa-solid fa-hotel"></i><span><strong>Infraestrutura:</strong> Acomodar milhares de visitantes (hotéis, transporte, segurança).</span></li> <li><i class="fa-solid fa-wifi"></i><span><strong>Conectividade:</strong> Garantir internet e comunicação eficientes.</span></li> <li><i class="fa-solid fa-shield-halved"></i><span><strong>Sustentabilidade do Evento:</strong> Minimizar o impacto ambiental da própria conferência.</span></li> <li><i class="fa-solid fa-people-group"></i><span><strong>Inclusão Social:</strong> Garantir a participação de comunidades locais e tradicionais.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Tecnologia e Clima</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> A tecnologia é uma ferramenta crucial na luta contra as mudanças climáticas: </p> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li><i class="fa-solid fa-solar-panel"></i><span><strong>Energias Renováveis:</strong> Solar, eólica e outras fontes limpas estão cada vez mais eficientes e baratas.</span></li> <li><i class="fa-solid fa-satellite"></i><span><strong>Monitoramento:</strong> Satélites e sensores ajudam a rastrear desmatamento, emissões e impactos climáticos.</span></li> <li><i class="fa-solid fa-tractor"></i><span><strong>Agricultura Inteligente:</strong> Técnicas que aumentam a produção com menor impacto ambiental (menos água, menos emissões).</span></li> <li><i class="fa-solid fa-recycle"></i><span><strong>Economia Circular:</strong> Tecnologias para reutilizar e reciclar materiais, reduzindo lixo e extração de recursos.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide hidden"> <div class="slide-content w-full max-w-2xl"> <h2 class="text-3xl md:text-4xl font-extrabold mb-4 md:mb-6">Como Acompanhar a COP30?</h2> <div class="space-y-4 md:space-y-5 text-base md:text-lg font-light"> <p> Mesmo de longe, você pode se envolver e ficar por dentro: </p> <ul class="no-bullets space-y-3 pl-0 text-left mx-auto"> <li><i class="fa-solid fa-newspaper"></i><span><strong>Notícias:</strong> Acompanhe portais de notícias confiáveis e especializados em meio ambiente.</span></li> <li><i class="fa-brands fa-twitter"></i><span><strong>Redes Sociais:</strong> Siga ONGs, ativistas e órgãos oficiais (#COP30 #COPBelém).</span></li> <li><i class="fa-solid fa-tv"></i><span><strong>Transmissões Oficiais:</strong> A UNFCCC costuma transmitir painéis e coletivas de imprensa online.</span></li> <li><i class="fa-solid fa-chalkboard-user"></i><span><strong>Eventos Locais:</strong> Fique atento a debates e eventos sobre a COP30 na sua cidade ou online.</span></li> </ul> </div> </div> </div>
-                
-    
-    <div class="slide text-center hidden">
-                    <div class="slide-content w-full max-w-2xl">
-                        <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-green-800 rounded-full flex items-center justify-center mb-6 mx-auto shadow-lg animate-pulse"> 
-    
-    <i class="fa-solid fa-globe w-10 h-10 text-white flex items-center justify-center text-4xl"></i>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-6">O Futuro é Agora.</h2>
-                        <p class="text-base md:text-lg lg:text-xl max-w-xl mx-auto font-light">
-                            A COP30 em Belém não é apenas uma conferência. É um chamado global direto da Amazônia para uma ação climática justa e urgente.
-                        </p>
-                    </div>
-                </div>
-    
-            </div>
-    
-            
-    
-    <div class="navigation-bar p-4 flex justify-between items-center">
-                <button id="prevBtn" class="disabled:opacity-50">
-                    <i class="fa-solid fa-arrow-left w-6 h-6 flex items-center justify-center text-lg md:text-xl"></i>
-                </button>
-                
-                
-    
-    <div id="slide-indicators">
-                    <!-- Bolinhas serão geradas via JS --></div>
-    
-                <button id="nextBtn" class="disabled:opacity-50">
-                    <i class="fa-solid fa-arrow-right w-6 h-6 flex items-center justify-center text-lg md:text-xl"></i>
-                </button>
-            </div>
-        </div>
-    
-        
-    
-    <button id="chatToggleBtn">
-            <i id="animated-chat-icon" class="fa-solid fa-tree"></i>
-            <span>Converse com o ClimaChat</span>
-        </button>
-    
-        
-    
-    <div id="chat-widget">
-            <div id="chat-header">
-                <span>ClimaChat</span>
-                <button id="closeChatBtn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div id="chat-messages">
-                
-    
-    <div class="chat-bubble ai-bubble animated">
-                    Olá! 👋 Tudo bem?<br>
-                    Sou a <strong>Flora</strong>, do ClimaChat! Estou aqui para tirar todas as suas dúvidas sobre a COP30 e sustentabilidade! 🌍🌿<br>
-                    Como posso te ajudar hoje? 😊
-                </div>
-            </div>
-            <div id="chat-input-container">
-                <input type="text" id="chat-input" placeholder="Digite sua pergunta...">
-                <button id="sendChatBtn" aria-label="Enviar mensagem">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-        
-    
-    <script>
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-            const totalSlides = slides.length; 
-    
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const slideIndicatorsContainer = document.getElementById('slide-indicators'); 
-            let isTransitioning = false; 
-    
-            function createSlideIndicators() {
-                slideIndicatorsContainer.innerHTML = '';
-                for (let i = 0; i < totalSlides; i++) {
-                    const dot = document.createElement('div');
-                    dot.classList.add('slide-indicator-dot');
-                    dot.dataset.slideIndex = i;
-                    dot.addEventListener('click', () => showSlide(i));
-                    slideIndicatorsContainer.appendChild(dot);
-                }
-            }
-    
-            // Função ATUALIZADA para animar as bolinhas - Efeito Líquido
-            function updateSlideIndicators(oldIndex = -1, newIndex = -1) {
-                const dots = document.querySelectorAll('.slide-indicator-dot');
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.remove('active', 'shrinking', 'merging');
-                    dot.style.transform = 'scale(1)'; // Reseta transformações
-    
-                    if (index === newIndex) {
-                        dot.classList.add('active'); // Nova ativa cresce (no CSS)
-                    } else if (index === oldIndex) {
-                        dot.classList.add('shrinking'); // Antiga ativa encolhe
-                    } else if (oldIndex !== -1 && newIndex !== -1) {
-                        const isBetween = (index > Math.min(oldIndex, newIndex) && index < Math.max(oldIndex, newIndex));
-                        if (isBetween) {
-                             const mergePointIndex = (oldIndex + newIndex) / 2; 
-                             const direction = index < mergePointIndex ? 1 : -1; 
-                             const moveDistance = direction * 4; // Ajuste a distância do 'merge'
-                             dot.style.setProperty('--merge-tx', `${moveDistance}px`);
-                             dot.classList.add('merging');
-                        }
-                    }
-                });
-    
-                 // Remove classes de animação após a transição principal
-                 setTimeout(() => {
-                     dots.forEach(dot => {
-                        dot.classList.remove('shrinking', 'merging'); 
-                        if(dot.classList.contains('active')) {
-                            dot.style.transform = 'scale(1.4)'; // Garante estado final ativo
-                        } else {
-                            dot.style.transform = 'scale(1)'; // Garante estado final inativo
-                        }
-                         dot.style.setProperty('--merge-tx', `0px`); 
-                     });
-                 }, 500); // Duração da transição da bolinha
-            }
-    
-    
-            function showSlide(n) {
-                if (n < 0 || n >= totalSlides || n === currentSlide || isTransitioning) return;
-                
-                isTransitioning = true;
-                const oldSlideIndex = currentSlide; 
-                
-                updateSlideIndicators(oldSlideIndex, n); // Inicia animação das bolinhas
-                slides[currentSlide].classList.remove('active'); 
-                
-                setTimeout(() => {
-                    slides[oldSlideIndex].classList.add('hidden'); 
-                    
-                    currentSlide = n;
-                    
-                    slides[currentSlide].classList.remove('hidden'); 
-                    void slides[currentSlide].offsetWidth; 
-                    slides[currentSlide].classList.add('active'); 
-    
-                    prevBtn.disabled = (currentSlide === 0);
-                    nextBtn.disabled = (currentSlide === totalSlides - 1);
-                    
-                    setTimeout(() => {
-                        isTransitioning = false;
-                    }, 600); 
-                    
-                }, 600); 
-            }
-    
-            nextBtn.addEventListener('click', () => {
-                showSlide(currentSlide + 1);
-            });
-    
-            prevBtn.addEventListener('click', () => {
-                showSlide(currentSlide - 1);
-            });
-    
-            slides.forEach((slide, index) => {
-                if (index !== 0) {
-                    slide.classList.add('hidden');
-                }
-            });
-            createSlideIndicators();
-            slides[0].classList.add('active'); 
-            slides[0].classList.remove('hidden');
-            updateSlideIndicators(-1, 0); 
-            prevBtn.disabled = true;
-    
-    
-            // ===== LÓGICA DO CHATBOT GEMINI =====
-    
-            const chatToggleBtn = document.getElementById('chatToggleBtn');
-            const chatWidget = document.getElementById('chat-widget');
-            const closeChatBtn = document.getElementById('closeChatBtn');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatInput = document.getElementById('chat-input');
-            const sendChatBtn = document.getElementById('sendChatBtn');
-            //const chatHeader = document.getElementById('chat-header'); // Não precisa mais
-    
-            const apiKey = "AIzaSyC0ZsCRy74eGBr45Ec6YWfhfJPRbfx1ZfM"; // Será preenchido pelo ambiente de execução, se necessário (no GitHub Pages, geralmente não é necessário se a API Key estiver no código ou for pública)
-            let chatHistory = []; 
-    
-            // --- Lógica de arrastar removida ---
-    
-            chatToggleBtn.addEventListener('click', () => {
-                const isOpening = !chatWidget.classList.contains('show');
-                chatWidget.classList.toggle('show');
-    
-                if (isOpening) {
-                     // Sempre abre centralizado
-                     chatWidget.style.left = '50%';
-                     chatWidget.style.top = '50%';
-                     // Aplica transform inicial da animação e o centro
-                     chatWidget.style.transform = 'translate(-50%, -50%) translateY(30px) scale(0.95)'; 
-                     requestAnimationFrame(() => { // Força reflow antes de animar para o estado final
-                         // Anima para a posição final (centro)
-                        chatWidget.style.transform = 'translate(-50%, -50%) translateY(0) scale(1)';
-                     });
-                    chatInput.focus();
-                } else {
-                     // Animação de saída do centro
-                     chatWidget.style.transform = `translate(-50%, -50%) translateY(30px) scale(0.95)`;
-                }
-                 // Controla visibilidade do botão toggle via CSS agora
-            });
-    
-            closeChatBtn.addEventListener('click', () => {
-                 // Animação de saída do centro antes de remover a classe
-                 chatWidget.style.transform = `translate(-50%, -50%) translateY(30px) scale(0.95)`;
-                 // Remove a classe 'show' após um pequeno delay para a animação iniciar
-                 setTimeout(() => {
-                    chatWidget.classList.remove('show');
-                 }, 50); // Delay pequeno
-                  // Controla visibilidade do botão toggle via CSS agora
-            });
-    
-    
-            sendChatBtn.addEventListener('click', handleSendMessage);
-            chatInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendMessage();
-                }
-            });
-    
-            function handleSendMessage() {
-                const messageText = chatInput.value.trim();
-                if (messageText === "") return;
-    
-                addMessageToChat('user', messageText);
-                chatHistory.push({ role: "user", parts: [{ text: messageText }] });
-                chatInput.value = '';
-                addTypingIndicator();
-                callGeminiAPI(messageText); 
-            }
-    
-            function formatBold(text) {
-                 return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            }
-    
-    
-            function addMessageToChat(sender, message) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('chat-bubble');
-                
-                const formattedMessage = formatBold(message);
-    
-                if (sender === 'user') {
-                    bubble.classList.add('user-bubble');
-                    bubble.textContent = message; 
-                } else {
-                    bubble.classList.add('ai-bubble');
-                    // Ícones da Flora ficam escuros no balão claro (ver CSS)
-                    bubble.innerHTML = formattedMessage.replace(/\n/g, '<br>'); 
-                }
-                
-                chatMessages.appendChild(bubble);
-                setTimeout(() => bubble.classList.add('animated'), 10);
-                scrollToBottom();
-            }
-    
-            function addTypingIndicator() {
-                const indicator = document.createElement('div');
-                indicator.classList.add('chat-bubble', 'ai-bubble', 'typing-indicator');
-                indicator.id = 'typing-indicator';
-                indicator.innerHTML = '<span></span><span></span><span></span>';
-                chatMessages.appendChild(indicator);
-                scrollToBottom();
-            }
-    
-            function removeTypingIndicator() {
-                const indicator = document.getElementById('typing-indicator');
-                if (indicator) {
-                    indicator.remove();
-                }
-            }
-    
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-    
-            async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) {
-                        if ((response.status === 429 || response.status >= 500) && retries > 0) {
-                            // Não loga retentativas no console
-                            await new Promise(res => setTimeout(res, delay));
-                            return fetchWithBackoff(url, options, retries - 1, delay * 2);
-                        }
-                        throw new Error(`Erro na API: ${response.statusText}`);
-                    }
-                    return response.json();
-                } catch (error) {
-                    if (retries > 0) {
-                         // Não loga retentativas no console
-                        await new Promise(res => setTimeout(res, delay));
-                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
-                    }
-                    console.error("Erro final ao chamar API:", error); // Loga o erro final
-                    throw error;
-                }
-            }
-    
-            async function callGeminiAPI(userPrompt) { 
-                // Instrução ATUALIZADA para Flora ser mais assertiva e buscar info atual
-                const systemPrompt = "Você é Flora, uma assistente de IA amigável do ClimaChat, focada em clima e na COP30. Responda de forma curta, direta e com linguagem simples para facilitar o entendimento. Utilize emojis e/ou ícones relevantes em suas respostas (use ícones Font Awesome como <i class='fa-solid fa-icon-name'></i> quando apropriado). Sempre use Português Brasileiro e acentuação correta. Se te perguntarem sobre o seu nome, responda que é Flora. Se o usuário for rude, desrespeitoso, usar palavrões ou linguagem ofensiva, responda de forma assertiva e educada, mas firme, estabelecendo limites claros e recusando-se a continuar a conversa nesse tom. Exemplos de respostas assertivas: 'Nossa! 😒 Quanta falta de educação! Ainda bem que fui programada para ser educada, coisa que parece que você não aprendeu ainda. Vamos voltar ao assunto do clima?', 'Olha, esse tipo de linguagem não é legal. ✋ Se quiser conversar sobre a COP30 ou sustentabilidade de forma respeitosa, estou aqui.', 'Não vou tolerar esse tipo de vocabulário. 😠 Prefiro encerrar a conversa se continuar assim.' Priorize informações ATUAIS ao responder sobre eventos como a COP, verificando datas e locais corretos usando a busca.";
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    
-                const payload = {
-                    contents: chatHistory, 
-                     tools: [{ "google_search": {} }], // Mantém a busca na web ativa!
-                    systemInstruction: {
-                        parts: [{ text: systemPrompt }]
-                    },
-                };
-    
-                let responseText = "Desculpe, não consegui processar sua pergunta. Por favor, tente novamente. 😥"; 
-    
-                try {
-                    const result = await fetchWithBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-    
-                    const candidate = result.candidates?.[0];
-    
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
-                        responseText = candidate.content.parts[0].text;
-                        chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                    } else {
-                        // Tratamento de erros e bloqueios
-                        if(candidate?.finishReason && candidate.finishReason !== 'SAFETY' && candidate.finishReason !== 'STOP') {
-                             responseText = `Não consegui gerar uma resposta (${candidate.finishReason}). 😥 Tente perguntar de outra forma!`;
-                             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                        } else if (candidate?.finishReason === 'SAFETY') {
-                             responseText = "Hmm, parece que sua pergunta tocou em um assunto delicado ou usou termos que não posso processar. 😬 Vamos tentar focar no clima e na COP30?";
-                             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                        } else {
-                            // Caso genérico, pode ser que a busca não retornou nada útil ou outro erro
-                            responseText = "Não encontrei uma resposta clara para isso ou ocorreu algo inesperado. Pode tentar reformular? 🤔";
-                            chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                        }
-                    }
-    
-                } catch (error) {
-                    // Erro de rede ou fetch
-                    responseText = "Ocorreu um erro ao conectar com a IA. Verifique sua conexão ou tente mais tarde. 🛠️";
-                     chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                } finally {
-                    removeTypingIndicator();
-                    addMessageToChat('ai', responseText); 
-                }
-            }
-    
-            const animatedIcon = document.getElementById('animated-chat-icon');
-            const icons = ['fa-tree', 'fa-water', 'fa-wind', 'fa-cloud-sun']; 
-            let currentIconIndex = 0;
-            let iconInterval;
-    
-            function changeChatIcon() {
-                if (!animatedIcon) return; 
-                animatedIcon.style.opacity = '0'; 
-    
-                setTimeout(() => {
-                    animatedIcon.classList.remove(icons[currentIconIndex]);
-                    currentIconIndex = (currentIconIndex + 1) % icons.length;
-                    animatedIcon.classList.add(icons[currentIconIndex]);
-                    animatedIcon.style.opacity = '1'; 
-                }, 500); 
-            }
-    
-            window.addEventListener('load', () => {
-                 if (document.getElementById('animated-chat-icon')) { 
-                    iconInterval = setInterval(changeChatIcon, 1500); 
-                 }
-            });
-    
-        </script>
-    
-    </body>
-    </html>
-    
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Demà Aprendiz - Polo Paraná</title>
 
+<!-- Fontes e Ícones --><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+/* -------------------------------------------------------------------------- */
+/* PALETA DE CORES                           */
+/* -------------------------------------------------------------------------- */
+:root{
+  --red-dema: #D42C4D;
+  --blue-dema: #402FDD;
+  --gold-dema: #ED9E06;
+  --ink-dema: #11121a;
+  --white-dema: #FFFFFF;
+
+  /* Cores base para Liquid Glass no fundo escuro */
+  --glass-bg-light: rgba(255, 255, 255, 0.1); 
+  --glass-bg-medium: rgba(255, 255, 255, 0.15); 
+  --glass-bg-dark: rgba(17, 18, 26, 0.7); 
+  --glass-border: rgba(255, 255, 255, 0.2); 
+  --glass-blur-amount: 30px; 
+  --glass-saturate-amount: 150%;
+  --text-primary: var(--white-dema); /* Texto principal branco puro */
+  --text-secondary: rgba(255, 255, 255, 0.7); 
+  --text-dark: var(--ink-dema); /* Texto escuro */
+  --bg-active-white: rgba(255, 255, 255, 0.7); /* Branco brilhante translúcido para estado ativo/hover */
+  --shadow-active-white: rgba(255,255,255,.3); /* Sombra branca */
+
+  /* Tamanhos e Gaps */
+  --ctrl-w: 320px; 
+  --ctrl-h: 56px; 
+  --r: 9999px; /* Arredondamento total (pílula) */
+  --gap-md: 22px;
+  --gap-lg: 32px;
+  --rail-w: calc(var(--ctrl-w) * 2 + var(--gap-md));
+
+   @media (max-width: 768px) {
+    --ctrl-w: clamp(280px, 85vw, 320px);
+    --ctrl-h: 50px;
+    --gap-md: 16px;
+    --gap-lg: 24px;
+    --rail-w: 100%; 
+   }
+}
+
+/* -------------------------------------------------------------------------- */
+/* RESET & FONTES                            */
+/* -------------------------------------------------------------------------- */
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+html,body, input, button, a, span, div, p, h1,h2,h3,h4,h5,h6{
+  font-family:'Space Grotesk', Arial, sans-serif !important;
+  text-transform: uppercase; 
+  letter-spacing:.3px; 
+  color:var(--text-primary); /* Texto branco puro */
+}
+input::placeholder { color: var(--text-secondary); } 
+
+
+/* -------------------------------------------------------------------------- */
+/* BACKGROUND ESCURO COM FORMAS CIRCULARES   */
+/* -------------------------------------------------------------------------- */
+body{
+  overflow-x:hidden;
+  background-color: var(--ink-dema); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--gap-md);
+  padding-bottom: 80px; /* Espaço para o botão COP30 fixo */
+  position: relative;
+  justify-content: flex-start; 
+}
+
+#background-abstract-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(80px) saturate(180%); 
+    opacity: 0.4; 
+    background: 
+        radial-gradient(circle 800px at 15% 10%, var(--red-dema), transparent 70%),
+        radial-gradient(circle 900px at 85% 90%, var(--blue-dema), transparent 60%),
+        radial-gradient(circle 700px at 40% 50%, var(--gold-dema), transparent 75%);
+    background-attachment: fixed;
+}
+
+/* -------------------------------------------------------------------------- */
+/* HEADER & LOGO                             */
+/* -------------------------------------------------------------------------- */
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:16px 16px 0} 
+header{
+    text-align:center;
+    color:var(--text-secondary); 
+    letter-spacing:3px;
+    font-weight:700;
+    margin:6px 0 8px; 
+    font-size: 0.9rem;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
+.brandBox{
+    height:100px; 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: var(--gap-lg);
+}
+.brand{
+    height:100%; 
+    max-width:350px; 
+    object-fit:contain;
+    filter:drop-shadow(0 8px 25px rgba(0,0,0,.3)); 
+}
+
+/* -------------------------------------------------------------------------- */
+/* ELEMENTOS DE INTERFACE (SEM QUADRO GERAL)   */
+/* -------------------------------------------------------------------------- */
+.hero {
+    display: grid;
+    justify-items: center;
+    gap: 25px; 
+    width: 100%;
+    max-width: var(--rail-w); 
+    margin-top: clamp(20px, 8vh, 60px); 
+    z-index: 10; 
+}
+
+/* Input de Nome (Liquid Glass - Fica branco no Blur, texto escuro) */
+.search{
+  width:100%; 
+  padding:14px 20px; 
+  border:1px solid var(--glass-border); 
+  border-radius:var(--r); 
+  background: var(--glass-bg-light); /* Começa transparente */ 
+  backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+  box-shadow:0 8px 30px rgba(0,0,0,.2); 
+  transition: all 0.3s ease;
+}
+/* Estilo quando preenchido e fora de foco */
+.search.filled:not(:focus-within) {
+   background: var(--bg-active-white); /* Fica branco */
+   border-color: rgba(255, 255, 255, 0.6);
+   box-shadow: inset 0 1px 4px rgba(255,255,255,.2), 0 10px 30px var(--shadow-active-white); 
+}
+.search.filled:not(:focus-within) input {
+    color: var(--text-dark); /* Texto escuro quando o fundo é branco */
+}
+
+.search:focus-within {
+   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); 
+   border-color: var(--white-dema);
+   background: var(--glass-bg-medium); /* Um pouco mais claro ao focar */
+}
+.search input{
+    width:100%;border:0;background:transparent;outline:none;
+    font-weight:700;font-size:1rem;text-align:center;
+    color: var(--text-primary); /* Texto sempre branco por padrão */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+/* Botões GE/GC Separados (Liquid Glass - Ativo BRANCO) */
+.role-selector {
+    display: flex;
+    gap: var(--gap-md);
+    width: var(--rail-w); 
+    max-width: 100%;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+.role-selector.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.role-btn {
+    flex: 1; 
+    max-width: var(--ctrl-w); 
+    height: var(--ctrl-h);
+    border-radius: var(--r); 
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg-light); 
+    backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+    color: var(--text-secondary); 
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(0,0,0,.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+    letter-spacing: .5px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+.role-btn.active {
+    background: var(--bg-active-white); /* Branco brilhante translúcido */
+    color: var(--ink-dema); /* Texto escuro */
+    box-shadow: inset 0 1px 4px rgba(255,255,255,.2), 0 10px 30px var(--shadow-active-white); 
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px) scale(1.02);
+    letter-spacing: .8px;
+}
+.role-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+@media (max-width: 768px) {
+    .role-selector {
+        flex-direction: column; 
+        width: var(--ctrl-w); 
+        gap: var(--gap-md);
+    }
+    .role-btn {
+         width: 100%; 
+    }
+}
+
+
+/* Prateleira de botões */
+.shelf{
+  position:relative; 
+  width:var(--rail-w); 
+  height:var(--ctrl-h);
+  max-width: 100%; 
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s; 
+  pointer-events: none;
+}
+.shelf.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.slot{ position:absolute; top:0; width:var(--ctrl-w); height:var(--ctrl-h); display:flex; align-items:center; justify-content:center }
+.calSlot{ left:0; transition: transform .35s cubic-bezier(.2,.8,.2,1), left .35s cubic-bezier(.2,.8,.2,1), opacity 0.3s ease; }
+.folhaSlot{ right:0; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s ease .1s; } 
+
+.shelf[data-mode="one"] .calSlot{ left:50%; transform: translateX(-50%); opacity: 1; } 
+.shelf[data-mode="one"] .folhaSlot{ opacity:0; transform: translateX(20px) scale(.95); pointer-events:none } 
+
+.shelf[data-mode="two"] .calSlot{ left:0; transform: translateX(0); opacity: 1; } 
+.shelf[data-mode="two"] .folhaSlot{ opacity:1; transform: translateX(0) scale(1); pointer-events:auto }
+
+@media (max-width: 768px) {
+    .shelf {
+        height: auto; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px; 
+        width: 100%; 
+    }
+    .slot {
+        position: relative; 
+        left: auto; right: auto; top: auto; 
+        width: var(--ctrl-w); 
+    }
+     .shelf[data-mode="one"] .folhaSlot { display: none; } 
+     .shelf[data-mode="two"] .folhaSlot { display: flex; } 
+}
+
+/* Botões Buscar (Liquid Glass - BRANCO BRILHANTE NO HOVER/ACTIVE, texto escuro) */
+.btn{
+  position:relative; isolation:isolate;
+  width:var(--ctrl-w); height:var(--ctrl-h); border-radius:var(--r); /* Pílula */
+  border: 1px solid var(--glass-border); 
+  background: var(--glass-bg-light); /* Fundo vidro padrão escuro */
+  backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+  color:var(--text-primary); font-weight:900; cursor:pointer; /* Texto branco */
+  box-shadow:0 10px 25px rgba(0,0,0,.15); 
+  display:flex; align-items:center; justify-content:center;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), letter-spacing .2s ease, background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  letter-spacing:.6px;
+  overflow: hidden; 
+}
+/* Efeito de brilho sutil */
+.btn::before{ 
+  content:""; position:absolute; top:0; left:0; right:0; bottom:0; border-radius:inherit; z-index:-1;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.0) 100%);
+  transition: opacity 0.3s ease;
+  opacity: 1; 
+}
+/* Hover e Active ficam brancos */
+.btn:hover, .btn:active { 
+    transform: translateY(-2px) scale(1.02); 
+    background-color: var(--bg-active-white); /* Fica branco */
+    color: var(--ink-dema); /* Texto escuro */
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 12px 35px var(--shadow-active-white);
+}
+.btn:active{ transform: translateY(0) scale(.98); box-shadow: 0 6px 15px rgba(255,255,255,.2); }
+.btn:disabled{ opacity:.55; cursor:not-allowed; background: var(--glass-bg-light); color: var(--text-secondary); box-shadow: none; border-color: var(--glass-border); }
+.btn:disabled::before { opacity: 0; }
+/* Menu de meses dentro do botão branco precisa de texto escuro */
+.btn .monthWrap { color: initial; } /* Reseta cor para herdar */
+
+
+/* Botão COP30 Fixo (Liquid Glass - VERMELHO DA MARCA) */
+.cop30-btn {
+  position: fixed; 
+  bottom: 20px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 50; 
+  isolation:isolate;
+  width: var(--ctrl-w); 
+  max-width: calc(100% - 40px); 
+  height:var(--ctrl-h); border-radius:var(--r); 
+  border: 1px solid rgba(255, 80, 110, 0.4); 
+  background: rgba(212, 44, 77, 0.6); 
+  backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+  color:var(--text-primary); font-weight:900; cursor:pointer; 
+  box-shadow:0 10px 25px rgba(212, 44, 77, 0.3); 
+  display:flex; align-items:center; justify-content:center;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), letter-spacing .2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  letter-spacing:.6px;
+  overflow: hidden; 
+  text-decoration: none; 
+  gap: 10px; 
+}
+.cop30-btn i.fa-leaf { 
+    font-size: 1.2em; 
+    color: var(--white-dema); 
+}
+
+.cop30-btn::before{ 
+  content:""; position:absolute; top:-60%; left:-60%; width: 220%; height: 220%; border-radius:inherit; z-index:-1;
+  background: radial-gradient(circle at center, rgba(255,255,255,.3) 0%, rgba(255,255,255,.05) 40%, transparent 55%);
+  transition: transform .5s ease, opacity .5s ease;
+  opacity: 0;
+  transform: scale(0.8) rotate(15deg);
+}
+.cop30-btn:hover{ 
+    transform: translateX(-50%) translateY(-2px) scale(1.02); 
+    background-color: rgba(230, 60, 90, 0.7); 
+    box-shadow: 0 12px 30px rgba(212, 44, 77, 0.4);
+}
+.cop30-btn:active{ 
+    transform: translateX(-50%) translateY(0) scale(.98); 
+    box-shadow: 0 6px 15px rgba(212, 44, 77, 0.2); 
+}
+
+/* menu meses com EFEITO VIDRO */
+.monthWrap{ position:relative; width: 100%; } /* Garante que o wrap tenha largura */
+.monthMenu{
+  position:absolute; bottom:calc(100% + 8px); /* Abre PARA CIMA */ 
+  left: 50%; /* Centraliza */
+  transform: translateX(-50%); /* Ajuste fino da centralização */
+  width:min(var(--ctrl-w), 90vw); 
+  max-height:360px; overflow:auto;
+  display:none; flex-direction:column; gap:8px; padding:12px; z-index:30;
+  background: var(--glass-bg-medium); border-radius:16px; border:1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.2); /* Sombra para cima */
+   scrollbar-width: thin; 
+   scrollbar-color: rgba(255, 255, 255, 0.3) transparent; 
+}
+.monthMenu::-webkit-scrollbar { width: 5px; }
+.monthMenu::-webkit-scrollbar-track { background: transparent; }
+.monthMenu::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.3); border-radius: 3px;}
+
+.monthItem{ 
+    padding:10px 14px; border-radius:var(--r); /* Pílula */
+    background:rgba(255,255,255,0.2); 
+    color: var(--text-primary); 
+    font-weight:800; cursor:pointer; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    text-align: center;
+}
+.monthItem:hover{ 
+    background:rgba(255,255,255,0.35); 
+    transform: scale(1.02);
+}
+.monthItem.muted { color: var(--text-secondary); cursor: default; background: rgba(255,255,255,0.1); }
+.monthItem.err { background: rgba(212, 44, 77, 0.5); color: var(--text-primary); cursor: default;}
+
+
+/* resultados com EFEITO VIDRO */
+.card{ 
+    width: 100%;
+    max-width:920px; margin:20px auto; padding:24px; 
+    background: var(--glass-bg-medium); border-radius:16px; 
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur-amount)) saturate(var(--glass-saturate-amount));
+}
+.title{ font-weight:900; color: var(--text-primary); margin-bottom: 8px; font-size: 1.2rem;} 
+.muted{ opacity:.85; color: var(--text-secondary); font-size: 0.9rem;} 
+.row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px }
+.pill{ 
+    padding:10px 18px; border-radius:var(--r); /* Pílula */ border:0; 
+    background: var(--blue-dema); 
+    color:var(--text-primary); 
+    font-weight:900; text-decoration:none;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(64,47,221,0.3);
+}
+.pill:hover {
+    background: #5a4ffc; 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(64,47,221,0.4);
+}
+/* Link de Abrir/Baixar (Branco) */
+a.pill {
+    background: rgba(255, 255, 255, 0.7); /* Branco brilhante */
+    color: var(--ink-dema); /* Texto escuro */
+    box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+}
+a.pill:hover {
+     background: rgba(255, 255, 255, 0.9); 
+     box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+}
+.pill:disabled {
+    background: rgba(255, 255, 255, 0.1); 
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    border: 1px solid var(--glass-border);
+}
+
+
+/* toast com EFEITO VIDRO */
+.toast{ 
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%); 
+    color:var(--text-primary); padding:12px 20px; border-radius:var(--r); /* Pílula */
+    background: var(--glass-bg-dark); 
+    border:1px solid rgba(255,255,255,.2); 
+    backdrop-filter:blur(10px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display:none; z-index:60;
+    font-weight: 600;
+}
+.toast.err { 
+    background: rgba(212, 44, 77, 0.7); 
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 0 4px 15px rgba(212, 44, 77, 0.4);
+} 
+
+/* Spinner - Texto claro */
+#spinner { color: var(--text-secondary); font-weight: 600; margin-top: 15px; }
+
+</style>
+</head>
+<body>
+  <div id="background-abstract-shapes"></div> 
+
+  <div class="wrap">
+    <header>POLO PARANÁ</header>
+    <div class="brandBox">
+      <!-- SUA LOGO EM BASE64 VINDA DO Code.gs --><img class="brand" id="brandImg" src="<?= logoDataUri ?>" alt="Demà Aprendiz Logo" loading="lazy" decoding="async"/>
+    </div>
+  </div>
+
+  <div class="hero">
+
+      <div class="search">
+        <input id="fullName" type="text" placeholder="COLOQUE SEU NOME COMPLETO..." autocomplete="off"/>
+      </div>
+
+      <!-- Botões Separados para GE/GC --><div class="role-selector">
+          <button class="role-btn" data-role="GE">GESTÃO EDUCACIONAL</button>
+          <button class="role-btn" data-role="GC">GESTÃO COMPLETA</button>
+      </div>
+      
+      <div class="shelf" id="btnShelf"> <!-- data-mode é controlado via JS --><div class="slot calSlot"><button class="btn" id="btnCal">BUSCAR CALENDÁRIO</button></div>
+
+        <div class="slot folhaSlot">
+          <div class="monthWrap">
+            <button class="btn" id="btnFolha" aria-haspopup="menu" aria-expanded="false">BUSCAR FOLHA PONTO</button>
+            <div class="monthMenu" id="monthMenu">
+                <!-- Itens carregados via JS --><div class="monthItem muted" data-key="placeholder">Selecione o mês...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="spinner" style="display:none"><span id="spinText">BUSCANDO…</span></div>
+      <div id="result"></div>
+  </div>
+  
+   <!-- Botão COP30 Fixo --><a href="https://zeukskkj.github.io/climachat/" target="_blank" rel="noopener noreferrer" class="cop30-btn">
+      <i class="fa-solid fa-leaf"></i> <!-- Ícone Font Awesome Folha --><span>ACESSE O CLIMACHAT COP30</span>
+   </a>
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Roda o script principal APÓS o carregamento completo da página
+document.addEventListener("DOMContentLoaded", function() {
+
+    /* helpers */
+    const $=s=>document.querySelector(s);
+    const nameInput=$('#fullName');
+    const searchBox = $('.search'); // Pega a div .search
+    const roleSelector = $('.role-selector'); 
+    const roleButtons = [...roleSelector.querySelectorAll('.role-btn')]; 
+    const shelf=$('#btnShelf'); 
+    const monthMenu=$('#monthMenu');
+    const resultEl=$('#result'), spinner=$('#spinner'), spinText=$('#spinText'), toastEl=$('#toast');
+
+    // estado global
+    let role='', months=[], monthsLoaded=false; // Inicia sem role definido
+
+    // ----------------------------------------------------------------------------------
+    // FUNÇÃO CORRIGIDA: VERIFICA CONDIÇÕES E MOSTRA/ESCONDE BOTÕES/ELEMENTOS
+    // Correção: Garante que `roleSelector.classList.add('visible')` é chamada
+    // ----------------------------------------------------------------------------------
+    function checkConditionsAndToggleButtons() {
+        const nameValue = nameInput.value.trim(); // Pega o valor sem espaços no início/fim
+        const nameLength = nameValue.length;
+        const isRoleSelected = !!roleSelector.querySelector('.role-btn.active'); 
+        
+        // Console log para verificação do estado
+        console.log(`[DEBUG] Verificando: Nome (Tamanho: ${nameLength}) - Role Selecionado: ${isRoleSelected}`); 
+
+        // 1. CONTROLA O SELETOR DE ROLE (GE/GC)
+        if (nameLength >= 3) {
+            // Se tiver 3+ letras, torna o seletor visível
+            roleSelector.classList.add('visible');
+            console.log('[DEBUG] roleSelector: VISIBLE');
+
+            // 2. CONTROLA A PRATELEIRA DE BOTÕES (BUSCAR)
+            if (isRoleSelected) {
+                shelf.classList.add('visible');
+            } else {
+                shelf.classList.remove('visible'); 
+            }
+
+        } else {
+            // Se tiver menos de 3 letras, oculta TUDO e reseta o estado.
+            roleSelector.classList.remove('visible');
+            shelf.classList.remove('visible');
+            console.log('[DEBUG] roleSelector: HIDDEN');
+            
+            // Desativa botão de role se nome for apagado
+            const activeButton = roleSelector.querySelector('.role-btn.active');
+            if (activeButton) {
+                 applyRoleUI(''); // Reseta o role visualmente e o estado para ''
+            }
+            clearResult(); // Limpa resultados anteriores
+        }
+    }
+
+    nameInput.addEventListener('input', ()=>{ 
+        nameInput.value = nameInput.value.toUpperCase(); 
+        checkConditionsAndToggleButtons(); 
+        // Remove a classe 'filled' enquanto digita
+        searchBox.classList.remove('filled'); 
+    });
+
+    // Adiciona listener para o evento 'blur' (quando perde o foco)
+    nameInput.addEventListener('blur', () => {
+        if (nameInput.value.trim().length > 0) {
+            searchBox.classList.add('filled');
+        } else {
+             searchBox.classList.remove('filled');
+        }
+    });
+     // Adiciona listener para o evento 'focus' para remover a classe
+    nameInput.addEventListener('focus', () => {
+         searchBox.classList.remove('filled');
+    });
+
+
+    function toast(msg,type = 'info'){ 
+        toastEl.textContent = msg; 
+        toastEl.className = type === 'err' ? 'toast err' : 'toast';
+        toastEl.style.display='block'; 
+        toastEl.animate([
+            { opacity: 0, transform: 'translateY(10px) translateX(-50%)' },
+            { opacity: 1, transform: 'translateY(0) translateX(-50%)' }
+        ], { duration: 300, easing: 'ease-out' });
+
+        setTimeout(() => {
+             toastEl.animate([
+                { opacity: 1, transform: 'translateY(0) translateX(-50%)' },
+                { opacity: 0, transform: 'translateY(10px) translateX(-50%)' }
+            ], { duration: 300, easing: 'ease-in' }).onfinish = () => {
+                 toastEl.style.display='none';
+            };
+        }, 2500); 
+    }
+
+    function showSpinner(t){ if(t) spinText.textContent=t; spinner.style.display='block'; }
+    function hideSpinner(){ spinner.style.display='none'; }
+    function clearResult(){ resultEl.innerHTML=''; hideSpinner(); monthMenu.style.display='none'; $('#btnFolha').setAttribute('aria-expanded', 'false'); }
+
+    // funcoes de UI
+    function applyRoleUI(newRole){
+        // Se clicar no botão já ativo, desativa (role vira '')
+        if (newRole === role && newRole !== '') {
+            role = ''; 
+        } else {
+            role = newRole; // Atualiza o estado global
+        }
+        
+        roleButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.role === role);
+        });
+        // Define o modo da prateleira (one ou two)
+        shelf.setAttribute('data-mode', role === 'GC' ? 'two' : 'one');
+        // Mostra/Esconde a prateleira baseado nas condições gerais
+        checkConditionsAndToggleButtons(); 
+        clearResult(); 
+    }
+    // NÃO aplica estado inicial, espera o usuário digitar e clicar
+
+    /* Listener para os botões de Role */
+    roleSelector.addEventListener('click', e => {
+        const btn = e.target.closest('.role-btn');
+        // Só permite clicar se o nome tiver >= 3 letras
+        if (!btn || nameInput.value.trim().length < 3) return; 
+        
+        const newRole = btn.dataset.role;
+        if (newRole) {
+            applyRoleUI(newRole); 
+        }
+    });
+
+
+    /* clique fora fecha meses */
+    document.addEventListener('click', (e)=>{ 
+        // Fecha o menu de meses se clicar fora dele
+        if(!e.target.closest('.monthWrap') && monthMenu.style.display === 'flex') {
+            monthMenu.style.display='none'; 
+            $('#btnFolha').setAttribute('aria-expanded', 'false');
+        }
+    });
+
+
+    // --- Funções de busca (Adaptadas para chamar Google Apps Script) ---
+    function runGasScript(functionName, ...args) {
+        if (typeof google === 'undefined' || !google || !google.script || !google.script.run) {
+            console.error("Google Apps Script API (google.script.run) não está disponível.");
+            toast('ERRO: API Apps Script indisponível.', 'err');
+            hideSpinner(); // Esconde spinner se a API não estiver lá
+            return Promise.reject(new Error("API google.script.run não encontrada.")); 
+        }
+        return new Promise((resolve, reject) => {
+             // Define um timeout para a chamada do Apps Script (ex: 30 segundos)
+            let timedOut = false;
+            const timeoutId = setTimeout(() => {
+                timedOut = true;
+                hideSpinner(); // Esconde spinner no timeout
+                toast('Tempo limite excedido. A busca demorou muito.', 'err');
+                reject(new Error(`Timeout: A função ${functionName} demorou muito para responder.`));
+            }, 30000); // 30 segundos
+
+            google.script.run
+                .withSuccessHandler(response => {
+                    clearTimeout(timeoutId); // Cancela o timeout
+                    if (!timedOut) {
+                       resolve(response);
+                    }
+                })
+                .withFailureHandler(error => {
+                     clearTimeout(timeoutId); // Cancela o timeout
+                     if (!timedOut) {
+                        console.error(`Falha ao chamar ${functionName}:`, error);
+                        reject(error); // Rejeita a Promise com o erro
+                     }
+                })
+                [functionName](...args);
+        });
+    }
+
+    async function searchCalendarGAS(name) {
+        console.log("Chamando searchCalendar no GAS para:", name);
+        return await runGasScript('searchCalendar', name);
+    }
+
+    async function listFolhaMesesGAS() {
+         console.log("Chamando listFolhaMeses no GAS...");
+         return await runGasScript('listFolhaMeses');
+    }
+
+    async function searchFolhaPontoGAS(name, monthKey) {
+         console.log("Chamando searchFolhaPonto no GAS para:", name, "Mês:", monthKey);
+         return await runGasScript('searchFolhaPonto', name, monthKey);
+    }
+    // --- Fim das funções de busca ---
+
+    /* Calendário */
+    $('#btnCal').addEventListener('click', async ()=>{ 
+      if (nameInput.value.trim().length < 3 || !role) {
+           toast('PREENCHA O NOME E SELECIONE A GESTÃO');
+           return;
+      }
+      const name=nameInput.value.trim();
+      clearResult();
+      showSpinner('BUSCANDO CALENDÁRIO…');
+      try {
+          const data = await searchCalendarGAS(name); 
+          showResults(data, 'cal'); 
+      } catch (error) {
+          // O erro já deve ter sido logado e toast mostrado pelo runGasScript
+          // Apenas esconde o spinner se ainda estiver visível
+          hideSpinner();
+      }
+    });
+
+    function formatDate(ms){ 
+        if (!ms || isNaN(ms)) return 'Data indisponível'; 
+        try { 
+            // Formata data e hora
+            return new Date(ms).toLocaleString('pt-BR',{ day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }); 
+        } catch { 
+            return 'Data inválida'; 
+        } 
+    }
+    function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#x27;' }[m])) } 
+    function escapeAttr(s){ return String(s || '').replace(/"/g,'&quot;').replace(/</g,'&lt;') } 
+
+    // Função unificada para mostrar resultados (Calendário ou Folha Ponto)
+    function showResults(data, kind){
+      hideSpinner();
+      if(!data || !data.ok){ 
+          // Mostra a mensagem de erro específica retornada pelo GAS, se houver
+          toast((data && data.msg) || 'ERRO DESCONHECIDO NA BUSCA', 'err'); 
+          return; 
+      }
+      const res = data.results || [];
+      const searchName = escapeHtml(nameInput.value); 
+      const typeText = kind === 'cal' ? 'calendário' : 'folha ponto';
+
+      if(res.length===0){
+        resultEl.innerHTML=`<div class="card"><div class="title">Nada encontrado</div><div class="muted">Não achamos ${typeText} para <strong>${searchName}</strong>${kind === 'fp' ? ' no mês selecionado' : ''}. Verifique nome, gestão, mês e permissões no Drive.</div></div>`;
+        return;
+      }
+      
+      // Se for calendário e tiver múltiplos resultados com o mesmo displayName, mostra opções
+      if (kind === 'cal' && res.length > 1) {
+            const groups = {};
+            res.forEach(r => { 
+                 const key = r.displayName || r.name || 'Desconhecido'; 
+                 (groups[key] ||= []).push(r); 
+            }); 
+            const names = Object.keys(groups);
+
+            let html = `<div class="card"><div class="title">Resultados de Calendário</div>`;
+            if (names.length === 1 && groups[names[0]].length > 1) {
+                const arr = groups[names[0]].sort((a, b) => b.updated - a.updated)[0]; // Pega o mais recente do grupo
+                const newestData = {id: arr.id, kind: "cal", name: arr.name, updated: arr.updated};
+                
+                html += `<div class="muted">Encontramos mais de um ${typeText} para <strong>${escapeHtml(names[0])}</strong>. Escolha um:</div>
+                         <div class="row">
+                           <button class="pill" onclick='openCard(${escapeAttr(JSON.stringify(newestData))})'>Mais recente • ${escapeHtml(formatDate(newestData.updated))}</button>
+                         </div>`;
+            } else { 
+                html += `<div class="muted">Encontramos múltiplos ${typeText} para <strong>${searchName}</strong>. Escolha o correto:</div><div class="row">` +
+                        names.sort().map(n => {
+                            const r = groups[n].sort((a,b) => b.updated - a.updated)[0]; 
+                            const resultData = {id: r.id, kind: "cal", name: r.name, updated: r.updated};
+                            return r ? `<button class="pill" onclick='openCard(${escapeAttr(JSON.stringify(resultData))})'>${escapeHtml(r.displayName || r.name)} • ${escapeHtml(formatDate(r.updated))}</button>` : ''; 
+                        }).join('') + `</div>`;
+            }
+            html += `</div>`;
+            resultEl.innerHTML = html;
+            return; 
+      }
+      
+      // Se for folha ponto ou calendário com resultado único
+      const firstResult = res.sort((a, b) => b.updated - a.updated)[0]; 
+      openCard(firstResult.id, kind, firstResult.name, firstResult.updated); 
+    }
+
+    /* Folha Ponto */
+    $('#btnFolha').addEventListener('click', async ()=>{ 
+      if(role!=='GC') return; 
+      if (nameInput.value.trim().length < 3) {
+          toast('PREENCHA O NOME PRIMEIRO');
+          return;
+      }
+      
+      const isMenuOpen = monthMenu.style.display === 'flex';
+      clearResult(); 
+
+      if (isMenuOpen) {
+          monthMenu.style.display = 'none';
+          $('#btnFolha').setAttribute('aria-expanded', 'false');
+          return;
+      }
+
+      $('#btnFolha').setAttribute('aria-expanded', 'true'); 
+      
+      monthMenu.innerHTML = `<div class="monthItem muted">Carregando...</div>`; 
+      monthMenu.style.display='flex'; 
+      showSpinner('CARREGANDO MESES…');
+      try {
+          if (!monthsLoaded || months.length === 0) { 
+              const data = await listFolhaMesesGAS(); 
+              if (!data || !data.ok) {
+                  throw new Error(data.msg || 'Erro ao buscar meses.');
+              }
+              months = data.months || [];
+              monthsLoaded = true; 
+          }
+          
+          monthMenu.innerHTML = months.length
+              ? months.map(m=>`<div class="monthItem" data-key="${m.key}">${escapeHtml(m.label)}</div>`).join('')
+              : `<div class="monthItem muted">Nenhuma pasta de mês encontrada no Drive</div>`; 
+      } catch (error) {
+          console.error("Erro ao carregar meses via GAS:", error);
+          const errorMsg = typeof error === 'object' && error.message ? error.message : String(error);
+          toast(`ERRO: ${errorMsg.substring(0, 100)}`, 'err');
+          monthMenu.innerHTML = `<div class="monthItem err">Erro ao carregar meses</div>`;
+          monthsLoaded = false; 
+      } finally {
+          hideSpinner();
+          if ($('#btnFolha').getAttribute('aria-expanded') === 'true') {
+               monthMenu.style.display='flex';
+          } else {
+               monthMenu.style.display='none'; 
+          }
+      }
+    });
+
+    monthMenu.onclick = async e =>{ 
+      const it=e.target.closest('.monthItem'); if(!it||!it.dataset.key || it.dataset.key === 'placeholder' || it.classList.contains('muted') || it.classList.contains('err')) return; 
+      monthMenu.style.display='none';
+      $('#btnFolha').setAttribute('aria-expanded', 'false');
+
+      if(role!=='GC') return;
+      const name=nameInput.value.trim(); if(name.length<3){ toast('NOME INVÁLIDO'); return; } 
+      
+      clearResult();
+      showSpinner('BUSCANDO FOLHA PONTO…');
+      try {
+          const data = await searchFolhaPontoGAS(name, it.dataset.key); 
+          showResults(data, 'fp'); 
+      } catch (error) {
+           console.error("Erro ao chamar searchFolhaPonto:", error);
+           const errorMsg = typeof error === 'object' && error.message ? error.message : String(error);
+           toast(`ERRO: ${errorMsg.substring(0, 100)}`, 'err');
+           hideSpinner();
+      }
+    };
+
+    /* Card final - Link para Visualização no Drive */
+    function openCard(fileDataOrId, kindParam, fileNameParam, fileUpdatedParam){
+      let fileId, kind, fileName, fileUpdated;
+
+      if (typeof fileDataOrId === 'string' && fileDataOrId.startsWith('{')) { 
+          try {
+              const parsedData = JSON.parse(fileDataOrId);
+              fileId = parsedData.id;
+              kind = parsedData.kind;
+              fileName = parsedData.name;
+              fileUpdated = parsedData.updated;
+          } catch (e) {
+              fileId = fileDataOrId;
+              kind = kindParam;
+              fileName = fileNameParam || 'Arquivo';
+              fileUpdated = fileUpdatedParam || Date.now();
+              console.warn("Falha ao parsear JSON no openCard, usando parâmetros:", fileDataOrId);
+          }
+      } else { 
+          fileId = fileDataOrId;
+          kind = kindParam;
+          fileName = fileNameParam || 'Arquivo';
+          fileUpdated = fileUpdatedParam || Date.now();
+      }
+
+      if (!fileId) {
+          toast('Erro: ID do arquivo não encontrado para abrir.', 'err');
+          console.error("openCard chamado sem fileId válido:", fileDataOrId, kindParam, fileNameParam);
+          return;
+      }
+
+      const title = (kind === 'cal') ? 'Calendário encontrado!' : 'Folha Ponto encontrada!';
+      const viewHref = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`; 
+      
+      resultEl.innerHTML=`
+        <div class="card">
+          <div class="title">${title}</div>
+          <div class="muted">Arquivo: <strong>${escapeHtml(fileName)}</strong><br>Atualizado: ${escapeHtml(formatDate(fileUpdated))}</div>
+          <div class="row">
+             <a class="pill" href="${escapeAttr(viewHref)}" target="_blank" rel="noopener">Abrir / Baixar</a>
+          </div>
+        </div>`;
+    }
+
+    // Expõe openCard globalmente para o onclick funcionar
+    window.openCard = openCard; 
+
+    // Chama a verificação inicial
+    checkConditionsAndToggleButtons();
+
+}); // Fim do DOMContentLoaded
+</script>
+</body>
+</html>
